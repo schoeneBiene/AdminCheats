@@ -1,0 +1,8 @@
+name: AdminCheats
+version: '${project.version}'
+main: me.goodbee.admincheats.AdminCheats
+api-version: '1.19'
+load: STARTUP
+commands:
+  cheats:
+    description: Opens the admin cheats menu
