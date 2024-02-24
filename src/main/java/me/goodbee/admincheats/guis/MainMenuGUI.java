@@ -16,6 +16,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class MainMenuGUI {
@@ -39,6 +41,11 @@ public class MainMenuGUI {
 
         ItemStack flyStack = new ItemStack(Material.FEATHER);
         ItemMeta flyMeta = flyStack.getItemMeta();
+
+        List<String> asd = new ArrayList<String>();
+        asd.add(ChatColor.GRAY + "Allows you to fly just like in creative mode.");
+        asd.add("");
+        asd.add(ChatColor.RED + "" + ChatColor.ITALIC + "No settings available.");
 
         flyMeta.setDisplayName(ChatColor.AQUA + "Fly");
 
@@ -64,7 +71,13 @@ public class MainMenuGUI {
         ItemStack godStack = new ItemStack(Material.GOLDEN_APPLE);
         ItemMeta godMeta = godStack.getItemMeta();
 
+        List<String> godLore = new ArrayList<String>();
+        godLore.add(ChatColor.GRAY + "Makes you invincible.");
+        godLore.add("");
+        godLore.add(ChatColor.RED + "" + ChatColor.ITALIC + "No settings available.");
+
         godMeta.setDisplayName(ChatColor.YELLOW + "God Mode");
+        godMeta.setLore(godLore);
 
         godStack.setItemMeta(godMeta);
 
@@ -90,7 +103,13 @@ public class MainMenuGUI {
         ItemStack infTotemsStack = new ItemStack(Material.TOTEM_OF_UNDYING);
         ItemMeta infTotemsMeta = infTotemsStack.getItemMeta();
 
+        List<String> infTotemLore = new ArrayList<String>();
+        infTotemLore.add(ChatColor.GRAY + "Have a totem resurrect you even if you don't have one.");
+        infTotemLore.add("");
+        infTotemLore.add(ChatColor.RED + "" + ChatColor.ITALIC + "No settings available.");
+
         infTotemsMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Infinite Totems");
+        infTotemsMeta.setLore(infTotemLore);
 
         infTotemsStack.setItemMeta(infTotemsMeta);
 
