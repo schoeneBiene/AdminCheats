@@ -7,6 +7,8 @@ import com.github.stefvanschie.inventoryframework.pane.PatternPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.github.stefvanschie.inventoryframework.pane.util.Pattern;
 import com.github.stefvanschie.inventoryframework.pane.util.Slot;
+import me.goodbee.admincheats.util.GodmodeMan;
+import me.goodbee.admincheats.util.InfiniteTotemsMan;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -58,6 +60,56 @@ public class MainMenuGUI {
                 }
             }
         }), Slot.fromIndex(0));
+
+        ItemStack godStack = new ItemStack(Material.GOLDEN_APPLE);
+        ItemMeta godMeta = godStack.getItemMeta();
+
+        godMeta.setDisplayName(ChatColor.YELLOW + "God Mode");
+
+        godStack.setItemMeta(godMeta);
+
+        staticPane.addItem(new GuiItem(godStack, new Consumer<InventoryClickEvent>() {
+            @Override
+            public void accept(InventoryClickEvent event) {
+                event.setCancelled(true);
+
+                Player player = (Player) event.getWhoClicked();
+
+                if(!GodmodeMan.isGodded(player.getUniqueId())) {
+                    player.sendMessage(ChatColor.GREEN + "God mode has been enabled.");
+
+                    GodmodeMan.addGoddedPlayer(player.getUniqueId());
+                } else {
+                    player.sendMessage(ChatColor.RED + "God mode has been disabled.");
+
+                    GodmodeMan.removeGoddedPlayer(player.getUniqueId());
+                }
+            }
+        }), Slot.fromIndex(1));
+
+        ItemStack infTotemsStack = new ItemStack(Material.TOTEM_OF_UNDYING);
+        ItemMeta infTotemsMeta = infTotemsStack.getItemMeta();
+
+        infTotemsMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Infinite Totems");
+
+        infTotemsStack.setItemMeta(infTotemsMeta);
+
+        staticPane.addItem(new GuiItem(infTotemsStack, new Consumer<InventoryClickEvent>() {
+            @Override
+            public void accept(InventoryClickEvent event) {
+                event.setCancelled(true);
+
+                Player player = (Player) event.getWhoClicked();
+
+                if(InfiniteTotemsMan.isActivated(player.getUniqueId())) {
+                    player.sendMessage(ChatColor.RED + "Infinite Totems have been disabled.");
+                    InfiniteTotemsMan.removePlayer(player.getUniqueId());
+                } else {
+                    player.sendMessage(ChatColor.GREEN + "Infinite Totems have been enabled.");
+                    InfiniteTotemsMan.addPlayer(player.getUniqueId());
+                }
+            }
+        }), Slot.fromIndex(2));
 
         gui.addPane(staticPane);
         gui.addPane(pane);
