@@ -29,8 +29,8 @@ public class InfiniteTotemHandler implements Listener {
         player.getWorld().playSound(player.getLocation(), Sound.ITEM_TOTEM_USE, 1, 1);
         player.playEffect(EntityEffect.TOTEM_RESURRECT);
 
-        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 45, 2));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 40, 1));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 5, 2));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 45 * 20, 2));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 40 * 20, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 5 * 20, 2));
     }
 }
