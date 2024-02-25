@@ -1,10 +1,10 @@
-package me.goodbee.admincheats.util;
+package me.goodbee.admincheats.activelists;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class GodmodeMan {
+public class GodmodeList {
     private static List<UUID> goddedPlayers = new ArrayList<UUID>();
 
     public static boolean isGodded(UUID uuid) {

@@ -1,15 +1,12 @@
 package me.goodbee.admincheats.eventhandlers;
 
-import me.goodbee.admincheats.util.InfiniteTotemsMan;
+import me.goodbee.admincheats.activelists.InfiniteTotemsList;
 import org.bukkit.EntityEffect;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -22,7 +19,7 @@ public class InfiniteTotemHandler implements Listener {
 
         if(!(event.getDamage() >= player.getHealth())) return;
 
-        if(!(InfiniteTotemsMan.isActivated(player.getUniqueId()))) {
+        if(!(InfiniteTotemsList.isActivated(player.getUniqueId()))) {
             return;
         }
 

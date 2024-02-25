@@ -7,8 +7,8 @@ import com.github.stefvanschie.inventoryframework.pane.PatternPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.github.stefvanschie.inventoryframework.pane.util.Pattern;
 import com.github.stefvanschie.inventoryframework.pane.util.Slot;
-import me.goodbee.admincheats.util.GodmodeMan;
-import me.goodbee.admincheats.util.InfiniteTotemsMan;
+import me.goodbee.admincheats.activelists.GodmodeList;
+import me.goodbee.admincheats.activelists.InfiniteTotemsList;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -88,14 +88,14 @@ public class MainMenuGUI {
 
                 Player player = (Player) event.getWhoClicked();
 
-                if(!GodmodeMan.isGodded(player.getUniqueId())) {
+                if(!GodmodeList.isGodded(player.getUniqueId())) {
                     player.sendMessage(ChatColor.GREEN + "God mode has been enabled.");
 
-                    GodmodeMan.addGoddedPlayer(player.getUniqueId());
+                    GodmodeList.addGoddedPlayer(player.getUniqueId());
                 } else {
                     player.sendMessage(ChatColor.RED + "God mode has been disabled.");
 
-                    GodmodeMan.removeGoddedPlayer(player.getUniqueId());
+                    GodmodeList.removeGoddedPlayer(player.getUniqueId());
                 }
             }
         }), Slot.fromIndex(1));
@@ -120,12 +120,12 @@ public class MainMenuGUI {
 
                 Player player = (Player) event.getWhoClicked();
 
-                if(InfiniteTotemsMan.isActivated(player.getUniqueId())) {
+                if(InfiniteTotemsList.isActivated(player.getUniqueId())) {
                     player.sendMessage(ChatColor.RED + "Infinite Totems have been disabled.");
-                    InfiniteTotemsMan.removePlayer(player.getUniqueId());
+                    InfiniteTotemsList.removePlayer(player.getUniqueId());
                 } else {
                     player.sendMessage(ChatColor.GREEN + "Infinite Totems have been enabled.");
-                    InfiniteTotemsMan.addPlayer(player.getUniqueId());
+                    InfiniteTotemsList.addPlayer(player.getUniqueId());
                 }
             }
         }), Slot.fromIndex(2));

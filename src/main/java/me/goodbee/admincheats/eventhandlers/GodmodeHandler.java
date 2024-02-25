@@ -1,6 +1,6 @@
 package me.goodbee.admincheats.eventhandlers;
 
-import me.goodbee.admincheats.util.GodmodeMan;
+import me.goodbee.admincheats.activelists.GodmodeList;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,7 +13,7 @@ public class GodmodeHandler implements Listener {
 
         Player player = (Player) event.getEntity();
 
-        if(GodmodeMan.isGodded(player.getUniqueId())) {
+        if(GodmodeList.isGodded(player.getUniqueId())) {
             event.setCancelled(true);
         }
     }

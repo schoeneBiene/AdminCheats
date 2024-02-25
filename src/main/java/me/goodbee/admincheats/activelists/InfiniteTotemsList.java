@@ -1,10 +1,10 @@
-package me.goodbee.admincheats.util;
+package me.goodbee.admincheats.activelists;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class InfiniteTotemsMan {
+public class InfiniteTotemsList {
     public static List<UUID> activatedPlayers = new ArrayList<UUID>();
 
     public static void addPlayer(UUID uuid) {
