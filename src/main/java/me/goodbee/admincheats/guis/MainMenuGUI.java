@@ -9,6 +9,7 @@ import com.github.stefvanschie.inventoryframework.pane.util.Pattern;
 import com.github.stefvanschie.inventoryframework.pane.util.Slot;
 import me.goodbee.admincheats.activelists.GodmodeList;
 import me.goodbee.admincheats.activelists.InfiniteTotemsList;
+import me.goodbee.admincheats.activelists.KillauraList;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -88,14 +89,14 @@ public class MainMenuGUI {
 
                 Player player = (Player) event.getWhoClicked();
 
-                if(!GodmodeList.isGodded(player.getUniqueId())) {
+                if(!GodmodeList.isActivated(player.getUniqueId())) {
                     player.sendMessage(ChatColor.GREEN + "God mode has been enabled.");
 
-                    GodmodeList.addGoddedPlayer(player.getUniqueId());
+                    GodmodeList.addPlayer(player.getUniqueId());
                 } else {
                     player.sendMessage(ChatColor.RED + "God mode has been disabled.");
 
-                    GodmodeList.removeGoddedPlayer(player.getUniqueId());
+                    GodmodeList.removePlayer(player.getUniqueId());
                 }
             }
         }), Slot.fromIndex(1));
@@ -132,6 +133,36 @@ public class MainMenuGUI {
 
         gui.addPane(staticPane);
         gui.addPane(pane);
+
+        ItemStack killAuraStack = new ItemStack(Material.IRON_SWORD);
+        ItemMeta killAuraMeta = killAuraStack.getItemMeta();
+
+        List<String> killAuraLore = new ArrayList<String>();
+        killAuraLore.add(ChatColor.GRAY + "Damage entities around you.");
+        killAuraLore.add("");
+        killAuraLore.add(ChatColor.RED + "" + ChatColor.ITALIC + "No settings available.");
+
+        killAuraMeta.setDisplayName(ChatColor.RED + "Kill Aura");
+        killAuraMeta.setLore(killAuraLore);
+
+        killAuraStack.setItemMeta(killAuraMeta);
+
+        staticPane.addItem(new GuiItem(killAuraStack, new Consumer<InventoryClickEvent>() {
+            @Override
+            public void accept(InventoryClickEvent event) {
+                event.setCancelled(true);
+
+                Player player = (Player) event.getWhoClicked();
+
+                if(KillauraList.isActivated(player.getUniqueId())) {
+                    player.sendMessage(ChatColor.RED + "Kill Aura has been disabled.");
+                    KillauraList.removePlayer(player.getUniqueId());
+                } else {
+                    player.sendMessage(ChatColor.GREEN + "Kill Aura has been enabled.");
+                    KillauraList.addPlayer(player.getUniqueId());
+                }
+            }
+        }), Slot.fromIndex(3));
 
         return gui;
     }

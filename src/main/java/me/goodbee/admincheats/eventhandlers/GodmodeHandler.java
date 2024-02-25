@@ -13,7 +13,7 @@ public class GodmodeHandler implements Listener {
 
         Player player = (Player) event.getEntity();
 
-        if(GodmodeList.isGodded(player.getUniqueId())) {
+        if(GodmodeList.isActivated(player.getUniqueId())) {
             event.setCancelled(true);
         }
     }

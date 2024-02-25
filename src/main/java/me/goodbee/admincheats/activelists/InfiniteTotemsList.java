@@ -1,21 +1,9 @@
 package me.goodbee.admincheats.activelists;
 
+import me.goodbee.admincheats.util.ActivePlayerList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class InfiniteTotemsList {
-    public static List<UUID> activatedPlayers = new ArrayList<UUID>();
-
-    public static void addPlayer(UUID uuid) {
-        activatedPlayers.add(uuid);
-    }
-
-    public static void removePlayer(UUID uuid) {
-        activatedPlayers.remove(uuid);
-    }
-
-    public static boolean isActivated(UUID uuid) {
-        return activatedPlayers.contains(uuid);
-    }
-}
+public class InfiniteTotemsList extends ActivePlayerList {}
