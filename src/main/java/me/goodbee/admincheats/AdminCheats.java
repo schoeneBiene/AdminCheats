@@ -7,9 +7,14 @@ import me.goodbee.admincheats.runnables.KillauraHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class AdminCheats extends JavaPlugin {
+    public static AdminCheats getPlugin() {
+        return plugin;
+    }
+    private static AdminCheats plugin;
 
     @Override
     public void onEnable() {
+        plugin = this;
         getCommand("cheats").setExecutor(new OpenCheatUICommand(this));
 
         getServer().getPluginManager().registerEvents(new GodmodeHandler(), this);

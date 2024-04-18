@@ -7,6 +7,7 @@ import com.github.stefvanschie.inventoryframework.pane.PatternPane;
 import com.github.stefvanschie.inventoryframework.pane.StaticPane;
 import com.github.stefvanschie.inventoryframework.pane.util.Pattern;
 import com.github.stefvanschie.inventoryframework.pane.util.Slot;
+import me.goodbee.admincheats.AdminCheats;
 import me.goodbee.admincheats.activelists.GodmodeList;
 import me.goodbee.admincheats.activelists.InfiniteTotemsList;
 import me.goodbee.admincheats.activelists.KillauraList;
@@ -14,10 +15,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -36,17 +41,36 @@ public class MainMenuGUI {
 
         PatternPane pane = new PatternPane(9, 6, pattern);
 
-        pane.bindItem('1', new GuiItem(new ItemStack(Material.GRAY_STAINED_GLASS_PANE), event -> event.setCancelled(true)));
+        pane.bindItem('1', new GuiItem(new ItemStack(Material.YELLOW_STAINED_GLASS_PANE), event -> event.setCancelled(true)));
 
         StaticPane staticPane = new StaticPane(1, 1, 7, 4,Pane.Priority.HIGHEST);
 
+        RainbowRunner rainbowRunner = new RainbowRunner(pane, gui);
+        BukkitTask rainbowTask = rainbowRunner.runTaskTimer(AdminCheats.getPlugin(), 20, 20);
+
+        gui.setOnClose(new Consumer<InventoryCloseEvent>() {
+            @Override
+            public void accept(InventoryCloseEvent inventoryCloseEvent) {
+                rainbowTask.cancel();
+            }
+        });
+
+        addFlyItem(staticPane);
+        addGodItem(staticPane);
+        addInfTotemItem(staticPane, gui, pane);
+        addKillAuraItem(staticPane);
+
+        return gui;
+    }
+
+    private static void addFlyItem(StaticPane staticPane) {
         ItemStack flyStack = new ItemStack(Material.FEATHER);
         ItemMeta flyMeta = flyStack.getItemMeta();
 
-        List<String> asd = new ArrayList<String>();
-        asd.add(ChatColor.GRAY + "Allows you to fly just like in creative mode.");
-        asd.add("");
-        asd.add(ChatColor.RED + "" + ChatColor.ITALIC + "No settings available.");
+        List<String> flyLore = new ArrayList<String>();
+        flyLore.add(ChatColor.GRAY + "Allows you to fly just like in creative mode.");
+        flyLore.add("");
+        flyLore.add(ChatColor.RED + "" + ChatColor.ITALIC + "No settings available.");
 
         flyMeta.setDisplayName(ChatColor.AQUA + "Fly");
 
@@ -68,7 +92,9 @@ public class MainMenuGUI {
                 }
             }
         }), Slot.fromIndex(0));
+    }
 
+    private static void addGodItem(StaticPane staticPane) {
         ItemStack godStack = new ItemStack(Material.GOLDEN_APPLE);
         ItemMeta godMeta = godStack.getItemMeta();
 
@@ -100,7 +126,9 @@ public class MainMenuGUI {
                 }
             }
         }), Slot.fromIndex(1));
+    }
 
+    private static void addInfTotemItem(StaticPane staticPane, ChestGui gui, PatternPane pane) {
         ItemStack infTotemsStack = new ItemStack(Material.TOTEM_OF_UNDYING);
         ItemMeta infTotemsMeta = infTotemsStack.getItemMeta();
 
@@ -133,7 +161,9 @@ public class MainMenuGUI {
 
         gui.addPane(staticPane);
         gui.addPane(pane);
+    }
 
+    private static void addKillAuraItem(StaticPane staticPane) {
         ItemStack killAuraStack = new ItemStack(Material.IRON_SWORD);
         ItemMeta killAuraMeta = killAuraStack.getItemMeta();
 
@@ -163,7 +193,33 @@ public class MainMenuGUI {
                 }
             }
         }), Slot.fromIndex(3));
+    }
 
-        return gui;
+    private static class RainbowRunner extends BukkitRunnable {
+        public RainbowRunner(PatternPane pane, ChestGui gui) {
+            this.pane = pane;
+            this.gui = gui;
+        }
+        private PatternPane pane;
+        private ChestGui gui;
+        private int currentItem = 0;
+
+        private final List<Material> items = Arrays.asList(
+                Material.YELLOW_STAINED_GLASS_PANE,
+                Material.GREEN_STAINED_GLASS_PANE,
+                Material.BLUE_STAINED_GLASS_PANE
+        );
+
+        @Override
+        public void run() {
+            if(currentItem == items.toArray().length) {
+                currentItem = 0;
+            }
+
+            Material nextItem = items.get(currentItem);
+            pane.bindItem('1', new GuiItem(new ItemStack(nextItem), event -> event.setCancelled(true)));
+
+            gui.update();
+        }
     }
 }
